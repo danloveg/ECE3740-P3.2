@@ -1,0 +1,13 @@
+/Client/build/
+/Client/dist/
+/Client/nbproject/private/
+/Client/nbproject/build/
+/Client/nbproject/dist/
+
+/Server/build/
+/Server/dist/
+/Server/nbproject/private/
+/Server/nbproject/build/
+/Server/nbproject/dist/
+
+/Client/*.class
