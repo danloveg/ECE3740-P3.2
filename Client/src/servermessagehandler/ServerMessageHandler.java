@@ -21,11 +21,9 @@ public class ServerMessageHandler {
      * Create an instance with an associated client, socket, and interface.
      * Throws IOException if it cannot get the client's input and output streams.
      * @param clientSocket The socket the client is connected on
-     * @param ui The user interface
      * @throws IOException 
      */
-    public ServerMessageHandler(Socket clientSocket,
-                                userinterface.StandardIO ui) throws IOException {
+    public ServerMessageHandler(Socket clientSocket) throws IOException {
         this.input = new BufferedReader(
                      new InputStreamReader(clientSocket.getInputStream()));
         this.output = clientSocket.getOutputStream();

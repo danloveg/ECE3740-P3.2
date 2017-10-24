@@ -11,8 +11,8 @@ import java.io.IOException;
  */
 public class ClientMessageHandler {
     
-    private final userinterface.StandardIO console;
-    private client.Client myClient;
+    private final userinterface.Userinterface console;
+    private final client.Client myClient;
     
     
     /**
@@ -20,7 +20,7 @@ public class ClientMessageHandler {
      * @param console The console user interface
      * @param client The client
      */
-    public ClientMessageHandler(userinterface.StandardIO console, client.Client client) {
+    public ClientMessageHandler(userinterface.Userinterface console, client.Client client) {
         this.console = console;
         this.myClient = client;
     }

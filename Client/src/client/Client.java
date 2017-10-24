@@ -15,7 +15,7 @@ public class Client implements Runnable {
     
     private int portNumber;
     private Socket clientSocket = null;
-    private final userinterface.StandardIO console;
+    private final userinterface.Userinterface UI;
     private servermessagehandler.ServerMessageHandler commandHandler;
     private boolean connected = false;
     private boolean disconnectWaiting = false;
@@ -25,9 +25,9 @@ public class Client implements Runnable {
      * @param portNumber The port number
      * @param ui The user interface
      */
-    public Client(int portNumber, userinterface.StandardIO ui) {
+    public Client(int portNumber, userinterface.Userinterface ui) {
         this.portNumber = 5555;
-        this.console = ui;
+        this.UI = ui;
     }
 
 
@@ -41,8 +41,7 @@ public class Client implements Runnable {
             // Create a socket
             clientSocket = new Socket(address, portNumber);
             // Create a new command handler
-            this.commandHandler = new ServerMessageHandler(clientSocket,
-                                                           console);
+            this.commandHandler = new ServerMessageHandler(clientSocket);
             // Mark Client as "connected"
             connected = true;
             clientConnected();
@@ -60,7 +59,7 @@ public class Client implements Runnable {
         try {
             waitForDisconnectAck();
         } catch (TimeoutException e) {
-            console.update("Server connection timed out. Closing connection immediately.");
+            UI.update("Server connection timed out. Closing connection immediately.");
         }
 
         // Close the socket
@@ -81,14 +80,6 @@ public class Client implements Runnable {
     }
 
 
-    /**
-     * Determine whether the client is connected or not.
-     * @return true for connected, false if not.
-     */
-    public synchronized boolean isConnected() {
-        return connected;
-    }
-
 
     /**
      * Uses the server command handler to send a message to the server.
@@ -108,13 +99,13 @@ public class Client implements Runnable {
         while (true == connected) {
             try {
                 String msg = this.commandHandler.readFromServer();
-                console.update(msg);
+                UI.update(msg);
 
                 // If we were waiting for the message to finish sending to
                 // disconnect, notify anything waiting that the server has
                 // acknowledged us.
-                if (true == disconnectWaiting) {
-                    disconnectWaiting = false;
+                if (true == getDisconnectWaiting()) {
+                    setDisconnectWaiting(false);
                 }
             } catch (IOException e) {
                 if (true == connected) {
@@ -132,7 +123,7 @@ public class Client implements Runnable {
      * Notify the user that they are connected.
      */
     public void clientConnected() {
-        console.update("Client connected to server on port " + this.portNumber);
+        UI.update("Client connected to server on port " + this.portNumber);
     }
 
 
@@ -140,7 +131,7 @@ public class Client implements Runnable {
      * Notify the user that they have disconnected.
      */
     public void clientDisconnected() {
-        console.update("Client disconnected from server on port " + this.portNumber);
+        UI.update("Client disconnected from server on port " + this.portNumber);
     }
 
 
@@ -153,12 +144,12 @@ public class Client implements Runnable {
      */
     public void waitForDisconnectAck() throws TimeoutException {
         // We are now waiting for a disconnection
-        this.disconnectWaiting = true;
+        setDisconnectWaiting(true);
         long startTime = System.currentTimeMillis();
 
-        while (true == disconnectWaiting) {
+        while (true == getDisconnectWaiting()) {
             if (System.currentTimeMillis() - startTime > TIMEOUT_MILLIS) {
-                disconnectWaiting = false;
+                setDisconnectWaiting(false);
                 throw new TimeoutException();
             }
         }
@@ -170,8 +161,8 @@ public class Client implements Runnable {
      * @param e The exception thrown from trying to communicate with the server
      */
     public void serverNotResponding(IOException e) {
-        console.update("Could not read from server: " + e.toString());
-        console.update("Disconnecting...");
+        UI.update("Could not read from server: " + e.toString());
+        UI.update("Disconnecting...");
 
         try {
             this.disconnectFromServer();
@@ -186,4 +177,9 @@ public class Client implements Runnable {
     // -------------------------------------------------------------------------
     public void setPort(int newPort) { portNumber = newPort; }
     public int getPort()             { return portNumber; }
+
+    public synchronized boolean isConnected() { return connected; }
+
+    public synchronized void setDisconnectWaiting(boolean waiting) { disconnectWaiting = waiting; }
+    public synchronized boolean getDisconnectWaiting() { return disconnectWaiting; }
 }
