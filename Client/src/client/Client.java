@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
  * @author Daniel Lovegrove
  */
 public class Client implements Runnable {
-    private static final int TIMEOUT_MILLIS = 1000;
+    private static final int TIMEOUT_MILLIS = 2500;
     
     private int portNumber;
     private Socket clientSocket = null;

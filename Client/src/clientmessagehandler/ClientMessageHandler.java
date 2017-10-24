@@ -85,6 +85,27 @@ public class ClientMessageHandler {
                     console.update("No connected server.");
                 }
                 break;
+            case "L1on":
+            case "L2on":
+            case "L3on":
+            case "L4on":
+            case "L1off":
+            case "L2off":
+            case "L3off":
+            case "L4off":
+            case "gpb1":
+            case "gpb2":
+            case "gpb3":
+                if (true == myClient.isConnected()) {
+                    try {
+                        myClient.sendMessageToServer(cmd);
+                    } catch (IOException e) {
+                        console.update("Could not send message to server.");
+                    }
+                } else {
+                    console.update("No connected server.");
+                }
+                break;
             case "":
                 break;
             default:
