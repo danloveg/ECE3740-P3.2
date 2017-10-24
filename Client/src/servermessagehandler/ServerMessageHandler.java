@@ -13,7 +13,6 @@ import java.net.Socket;
  */
 public class ServerMessageHandler {
     private static final char TERMINATOR = 0xFFFD; // UTF-8 encoding of 0xFF
-    private final client.Client myClient;
     private BufferedReader input;
     private OutputStream output;
     
@@ -21,15 +20,12 @@ public class ServerMessageHandler {
     /**
      * Create an instance with an associated client, socket, and interface.
      * Throws IOException if it cannot get the client's input and output streams.
-     * @param client The client
      * @param clientSocket The socket the client is connected on
      * @param ui The user interface
      * @throws IOException 
      */
-    public ServerMessageHandler(client.Client client,
-                               Socket clientSocket,
-                               userinterface.StandardIO ui) throws IOException {
-        this.myClient = client;
+    public ServerMessageHandler(Socket clientSocket,
+                                userinterface.StandardIO ui) throws IOException {
         this.input = new BufferedReader(
                      new InputStreamReader(clientSocket.getInputStream()));
         this.output = clientSocket.getOutputStream();
@@ -37,15 +33,12 @@ public class ServerMessageHandler {
 
 
     /**
-     * Blocking method that reads an n-character String from the server. Waits
-     * to receive n bytes until it returns the sequence in the order they were
-     * received.
-     * @param msgLength The length of the message
+     * Blocking method that reads an n-character String from the server.
      * @return The byte from the server.
      * @throws IOException 
      */
-    public String readFromServer(int msgLength) throws IOException {
-        StringBuilder message = new StringBuilder(msgLength);
+    public String readFromServer() throws IOException {
+        StringBuilder message = new StringBuilder();
         boolean terminatorFound = false;
         
         while (false == terminatorFound) {
