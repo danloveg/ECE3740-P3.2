@@ -35,7 +35,7 @@ public class ServerMessageHandler {
      * @return The byte from the server.
      * @throws IOException 
      */
-    public String readFromServer() throws IOException {
+    public String readStringFromServer() throws IOException {
         StringBuilder message = new StringBuilder();
         boolean terminatorFound = false;
         
@@ -61,7 +61,7 @@ public class ServerMessageHandler {
      * @param message The byte to write to the server.
      * @throws IOException 
      */
-    public void sendMessage(String message) throws IOException {
+    public void sendStringToServer(String message) throws IOException {
         if (output != null) {
             for (int i = 0; i < message.length(); i++) {
                 output.write(message.charAt(i));

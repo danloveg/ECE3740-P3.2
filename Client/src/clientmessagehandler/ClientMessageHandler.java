@@ -11,17 +11,17 @@ import java.io.IOException;
  */
 public class ClientMessageHandler {
     
-    private final userinterface.Userinterface console;
+    private final userinterface.Userinterface UI;
     private final client.Client myClient;
     
     
     /**
      * Creates an instance with an associated user interface and client.
-     * @param console The console user interface
+     * @param ui The UI user interface
      * @param client The client
      */
-    public ClientMessageHandler(userinterface.Userinterface console, client.Client client) {
-        this.console = console;
+    public ClientMessageHandler(userinterface.Userinterface ui, client.Client client) {
+        this.UI = ui;
         this.myClient = client;
     }
     
@@ -42,12 +42,12 @@ public class ClientMessageHandler {
                         Thread clientThread = new Thread(myClient);
                         clientThread.start();
                     } catch (UnknownHostException e) {
-                        console.update("Could not determine host.");
+                        UI.update("Could not determine host.");
                     } catch (IOException e) {
-                        console.update("Could not connect to server.");
+                        UI.update("Could not connect to server.");
                     }
                 } else {
-                    console.update("Already connected!");
+                    UI.update("Already connected!");
                 }
                 break;
             case "disconnect":
@@ -56,20 +56,20 @@ public class ClientMessageHandler {
                         myClient.sendMessageToServer("d");
                         myClient.disconnectFromServer();
                     } catch (IOException e) {
-                        console.update("Error: " + e.toString());
+                        UI.update("Error: " + e.toString());
                     }
                 } else {
-                    console.update("No connected server.");
+                    UI.update("No connected server.");
                 }
                 break;
             case "quit":
-                console.update("Quitting...");
+                UI.update("Quitting...");
                 if (true == myClient.isConnected()) {
                     try {
                         myClient.sendMessageToServer("q");
                         myClient.disconnectFromServer();
                     } catch (IOException e) {
-                        console.update("Error: " + e.toString());
+                        UI.update("Error: " + e.toString());
                     }
                 }
                 System.exit(0);
@@ -79,10 +79,10 @@ public class ClientMessageHandler {
                     try {
                         myClient.sendMessageToServer("t");
                     } catch (IOException e) {
-                        console.update("Could not send message to server.");
+                        UI.update("Could not send message to server.");
                     }
                 } else {
-                    console.update("No connected server.");
+                    UI.update("No connected server.");
                 }
                 break;
             case "L1on":
@@ -100,16 +100,16 @@ public class ClientMessageHandler {
                     try {
                         myClient.sendMessageToServer(cmd);
                     } catch (IOException e) {
-                        console.update("Could not send message to server.");
+                        UI.update("Could not send message to server.");
                     }
                 } else {
-                    console.update("No connected server.");
+                    UI.update("No connected server.");
                 }
                 break;
             case "":
                 break;
             default:
-                console.update("\"" + cmd + "\" is not recognized.");
+                UI.update("\"" + cmd + "\" is not recognized.");
                 break;
         }
     }

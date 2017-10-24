@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package userinterfacegui;
 
 import java.awt.event.WindowAdapter;
 
 /**
- *
+ * Graphical client user interface.
+ * 
  * @author loveboat
  */
 public class ClientUserInterface extends javax.swing.JFrame
@@ -54,8 +50,11 @@ public class ClientUserInterface extends javax.swing.JFrame
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                // Send quit command
                 commandHandler.execute("quit");
+                // Dispose of the window
                 windowEvent.getWindow().dispose();
+                // Quit the program
                 System.exit(0);
             }
         });

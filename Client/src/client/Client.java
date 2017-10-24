@@ -1,7 +1,8 @@
 package client;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.Socket;
+import java.net.InetAddress;
 import servermessagehandler.ServerMessageHandler;
 import java.util.concurrent.TimeoutException;
 
@@ -87,7 +88,7 @@ public class Client implements Runnable {
      * @throws IOException
      */
     public void sendMessageToServer(String message) throws IOException {
-        commandHandler.sendMessage(message);
+        commandHandler.sendStringToServer(message);
     }
 
 
@@ -98,7 +99,7 @@ public class Client implements Runnable {
     public void run() {
         while (true == connected) {
             try {
-                String msg = this.commandHandler.readFromServer();
+                String msg = this.commandHandler.readStringFromServer();
                 UI.update(msg);
 
                 // If we were waiting for the message to finish sending to
