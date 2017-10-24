@@ -46,12 +46,14 @@ public class ClientMessageHandler {
             case "d":
                 myServer.sendMessageToUI("Disconnect command received from client " + myClientConnection.getClientSocket().getRemoteSocketAddress());
                 myClientConnection.sendStringMessageToClient("Disconnect Ack: " + myClientConnection.getClientSocket().getRemoteSocketAddress());
+                myClientConnection.sendMessageToClient((byte) 0xFF);
                 myClientConnection.clientDisconnect();
                 myServer.sendMessageToUI("\tDisconnect successful. ");
                 break;
             case "q":
                 myServer.sendMessageToUI("Quit command received from client " + myClientConnection.getClientSocket().getRemoteSocketAddress());
                 myClientConnection.sendStringMessageToClient("Quit Ack: " + myClientConnection.getClientSocket().getRemoteSocketAddress());
+                myClientConnection.sendMessageToClient((byte) 0xFF);
                 myClientConnection.clientQuit();
                 myServer.sendMessageToUI("\tQuit successful. ");
                 break;
