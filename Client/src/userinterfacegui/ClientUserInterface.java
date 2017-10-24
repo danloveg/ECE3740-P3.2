@@ -11,6 +11,8 @@ package userinterfacegui;
  */
 public class ClientUserInterface extends javax.swing.JFrame
                                  implements userinterface.Userinterface {
+    
+    private clientmessagehandler.ClientMessageHandler commandHandler;
 
     /**
      * Creates new form ClientUserInterface
@@ -104,7 +106,6 @@ public class ClientUserInterface extends javax.swing.JFrame
                                     .addComponent(connectToServerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(disconnectFromServerButton))
-                            .addComponent(getTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btn1StateButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -116,8 +117,9 @@ public class ClientUserInterface extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn2Label)
-                                    .addComponent(btn3Label))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                    .addComponent(btn3Label)))
+                            .addComponent(getTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(outputLabel)
@@ -185,6 +187,12 @@ public class ClientUserInterface extends javax.swing.JFrame
         // Append message to output text area
         this.outputTextArea.append(message + "\n");
     }
+    
+    
+    public void setCommandHandler(clientmessagehandler.ClientMessageHandler handler) {
+        commandHandler = handler;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn1Label;
