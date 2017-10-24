@@ -131,6 +131,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Connect"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectToServerButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="disconnectFromServerButton">
       <Properties>
@@ -139,31 +142,49 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Disconnect"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="disconnectFromServerButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="getTimeButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Get Time"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getTimeButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="led1CheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="LED1 ON"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="led1CheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="led2CheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="LED2 ON"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="led2CheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="led3CheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="LED3 ON"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="led3CheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="led4CheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="LED4 ON"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="led4CheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="scrollPane">
       <AuxValues>
@@ -192,16 +213,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="BTN1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn1StateButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn2StateButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="BTN2"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn2StateButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn3StateButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="BTN3"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn3StateButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="btn1Label">
       <Properties>
@@ -225,6 +255,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Quit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quitButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -5,6 +5,8 @@
  */
 package userinterfacegui;
 
+import java.awt.event.WindowAdapter;
+
 /**
  *
  * @author loveboat
@@ -19,7 +21,46 @@ public class ClientUserInterface extends javax.swing.JFrame
      */
     public ClientUserInterface() {
         initComponents();
+        setupCloseConditions();
     }
+
+
+    /**
+     * Update the user interface with a new message.
+     * @param message The message to be appended to the user message display.
+     */
+    @Override
+    public void update(String message) {
+        // Append message to output text area
+        this.outputTextArea.append(message + "\n");
+    }
+
+
+    /**
+     * Set the command handler.
+     * @param handler The command handler to be associated with this.
+     */
+    public void setCommandHandler(clientmessagehandler.ClientMessageHandler handler) {
+        commandHandler = handler;
+    }
+
+
+    /**
+     * Set up the conditions on the window closing. Makes sure that quit is sent
+     * to the server before the window closes, so that the server knows we
+     * wanted to quit.
+     */
+    private void setupCloseConditions() {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                commandHandler.execute("quit");
+                windowEvent.getWindow().dispose();
+                System.exit(0);
+            }
+        });
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,19 +93,54 @@ public class ClientUserInterface extends javax.swing.JFrame
 
         connectToServerButton.setBackground(new java.awt.Color(131, 254, 71));
         connectToServerButton.setText("Connect");
+        connectToServerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectToServerButtonActionPerformed(evt);
+            }
+        });
 
         disconnectFromServerButton.setBackground(new java.awt.Color(254, 163, 34));
         disconnectFromServerButton.setText("Disconnect");
+        disconnectFromServerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disconnectFromServerButtonActionPerformed(evt);
+            }
+        });
 
         getTimeButton.setText("Get Time");
+        getTimeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getTimeButtonActionPerformed(evt);
+            }
+        });
 
         led1CheckBox.setText("LED1 ON");
+        led1CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led1CheckBoxActionPerformed(evt);
+            }
+        });
 
         led2CheckBox.setText("LED2 ON");
+        led2CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led2CheckBoxActionPerformed(evt);
+            }
+        });
 
         led3CheckBox.setText("LED3 ON");
+        led3CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led3CheckBoxActionPerformed(evt);
+            }
+        });
 
         led4CheckBox.setText("LED4 ON");
+        led4CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led4CheckBoxActionPerformed(evt);
+            }
+        });
 
         outputTextArea.setColumns(20);
         outputTextArea.setRows(5);
@@ -74,10 +150,25 @@ public class ClientUserInterface extends javax.swing.JFrame
         outputLabel.setText("Output");
 
         btn1StateButton.setText("BTN1");
+        btn1StateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1StateButtonActionPerformed(evt);
+            }
+        });
 
         btn2StateButton.setText("BTN2");
+        btn2StateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2StateButtonActionPerformed(evt);
+            }
+        });
 
         btn3StateButton.setText("BTN3");
+        btn3StateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3StateButtonActionPerformed(evt);
+            }
+        });
 
         btn1Label.setText("Get BTN1 state");
 
@@ -87,6 +178,11 @@ public class ClientUserInterface extends javax.swing.JFrame
 
         quitButton.setBackground(new java.awt.Color(254, 81, 70));
         quitButton.setText("Quit");
+        quitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,22 +273,65 @@ public class ClientUserInterface extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void connectToServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectToServerButtonActionPerformed
+        commandHandler.execute("connect");
+    }//GEN-LAST:event_connectToServerButtonActionPerformed
 
-    /**
-     * Update the user interface with a new message.
-     * @param message The message to be appended to the user message display.
-     */
-    @Override
-    public void update(String message) {
-        // Append message to output text area
-        this.outputTextArea.append(message + "\n");
-    }
-    
-    
-    public void setCommandHandler(clientmessagehandler.ClientMessageHandler handler) {
-        commandHandler = handler;
-    }
+    private void disconnectFromServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectFromServerButtonActionPerformed
+        commandHandler.execute("disconnect");
+    }//GEN-LAST:event_disconnectFromServerButtonActionPerformed
 
+    private void getTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getTimeButtonActionPerformed
+        commandHandler.execute("time");
+    }//GEN-LAST:event_getTimeButtonActionPerformed
+
+    private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
+        commandHandler.execute("quit");
+    }//GEN-LAST:event_quitButtonActionPerformed
+
+    private void btn1StateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1StateButtonActionPerformed
+        commandHandler.execute("gpb1");
+    }//GEN-LAST:event_btn1StateButtonActionPerformed
+
+    private void btn2StateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2StateButtonActionPerformed
+        commandHandler.execute("gpb2");
+    }//GEN-LAST:event_btn2StateButtonActionPerformed
+
+    private void btn3StateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3StateButtonActionPerformed
+        commandHandler.execute("gpb3");
+    }//GEN-LAST:event_btn3StateButtonActionPerformed
+
+    private void led1CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1CheckBoxActionPerformed
+        if (led1CheckBox.isSelected()) {
+            commandHandler.execute("L1on");
+        } else {
+            commandHandler.execute("L1off");
+        }
+    }//GEN-LAST:event_led1CheckBoxActionPerformed
+
+    private void led2CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2CheckBoxActionPerformed
+        if (led2CheckBox.isSelected()) {
+            commandHandler.execute("L2on");
+        } else {
+            commandHandler.execute("L2off");
+        }
+    }//GEN-LAST:event_led2CheckBoxActionPerformed
+
+    private void led3CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led3CheckBoxActionPerformed
+        if (led3CheckBox.isSelected()) {
+            commandHandler.execute("L3on");
+        } else {
+            commandHandler.execute("L3off");
+        }
+    }//GEN-LAST:event_led3CheckBoxActionPerformed
+
+    private void led4CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led4CheckBoxActionPerformed
+        if (led4CheckBox.isSelected()) {
+            commandHandler.execute("L4on");
+        } else {
+            commandHandler.execute("L4off");
+        }
+    }//GEN-LAST:event_led4CheckBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn1Label;
