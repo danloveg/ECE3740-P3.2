@@ -45,6 +45,7 @@ public class Client implements Runnable {
                                                            console);
             // Mark Client as "connected"
             connected = true;
+            clientConnected();
         }
     }
 
@@ -52,28 +53,24 @@ public class Client implements Runnable {
     /**
      * Disconnect from the server. Closes the client connection to the server
      * and closes the Server Command Handler
+     * @throws IOException
      */
-    public void disconnectFromServer() {
-        try {
-            // Close the socket
-            if (null != this.clientSocket) {
-                clientSocket.close();
-                clientSocket = null;
-            }
+    public void disconnectFromServer() throws IOException {
+        // Close the socket
+        if (null != this.clientSocket) {
+            clientSocket.close();
+            clientSocket = null;
+        }
 
-            // Close the command handler
-            if (null != this.commandHandler) {
-                this.commandHandler.close();
-                this.commandHandler = null;
-            }
-            
-        } catch (IOException e) {
-            System.err.println("Could not close client connection, exiting program.");
-            System.exit(1);
+        // Close the command handler
+        if (null != this.commandHandler) {
+            this.commandHandler.close();
+            this.commandHandler = null;
         }
         
         // Mark client as "Not connected."
         connected = false;
+        clientDisconnected();
     }
 
 
@@ -89,15 +86,10 @@ public class Client implements Runnable {
     /**
      * Uses the server command handler to send a message to the server.
      * @param message The message to send.
+     * @throws IOException
      */
-    public void sendMessageToServer(byte message) {
-        try {
-            commandHandler.sendMessage(message);
-        } catch (IOException e) {
-            console.update("Could not send message to server: " + e.toString());
-            console.update("Disconnecting...");
-            this.disconnectFromServer();
-        }
+    public void sendMessageToServer(byte message) throws IOException {
+        commandHandler.sendMessage(message);
     }
 
 
@@ -112,14 +104,34 @@ public class Client implements Runnable {
                 console.update("Response: " + msg);
             } catch (IOException e) {
                 if (true == connected) {
-                    console.update("Could not read from server: " + e.toString());
-                    console.update("Disconnecting...");
-                    this.disconnectFromServer();
+                    serverNotResponding(e);
                 }
             }
         }
     }
+    
+    // -------------------------------------------------------------------------
+    // Callback Methods
+    // -------------------------------------------------------------------------
+    public void clientConnected() {
+        console.update("Client connected to server on port " + this.portNumber);
+    }
 
+    public void clientDisconnected() {
+        console.update("Client disconnected from server on port " + this.portNumber);
+    }
+    
+    public void serverNotResponding(IOException e) {
+        console.update("Could not read from server: " + e.toString());
+        console.update("Disconnecting...");
+
+        try {
+            this.disconnectFromServer();
+        } catch (IOException ex) {
+            // Trouble closing the socket, nullify it as a last resort
+            clientSocket = null;
+        }
+    }
 
     // -------------------------------------------------------------------------
     // Getters and Setters

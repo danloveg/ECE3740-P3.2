@@ -41,7 +41,6 @@ public class ClientMessageHandler {
                         myClient.connectToServer(InetAddress.getLocalHost());
                         Thread clientThread = new Thread(myClient);
                         clientThread.start();
-                        console.update("Connected to server.");
                     } catch (UnknownHostException e) {
                         console.update("Could not determine host.");
                     } catch (IOException e) {
@@ -53,9 +52,12 @@ public class ClientMessageHandler {
                 break;
             case "disconnect":
                 if (true == myClient.isConnected()) {
-                    myClient.sendMessageToServer((byte) 'd');
-                    myClient.disconnectFromServer();
-                    console.update("Disconnected from server.");
+                    try {
+                        myClient.sendMessageToServer((byte) 'd');
+                        myClient.disconnectFromServer();
+                    } catch (IOException e) {
+                        console.update("Error: " + e.toString());
+                    }
                 } else {
                     console.update("No connected server.");
                 }
@@ -63,14 +65,22 @@ public class ClientMessageHandler {
             case "quit":
                 console.update("Quitting...");
                 if (true == myClient.isConnected()) {
-                    myClient.sendMessageToServer((byte) 'q');
-                    myClient.disconnectFromServer();
+                    try {
+                        myClient.sendMessageToServer((byte) 'q');
+                        myClient.disconnectFromServer();
+                    } catch (IOException e) {
+                        console.update("Error: " + e.toString());
+                    }
                 }
                 System.exit(0);
                 break;
             case "time":
                 if (true == myClient.isConnected()) {
-                    myClient.sendMessageToServer((byte) 't');
+                    try {
+                        myClient.sendMessageToServer((byte) 't');
+                    } catch (IOException e) {
+                        console.update("Could not send message to server.");
+                    }
                 } else {
                     console.update("No connected server.");
                 }
