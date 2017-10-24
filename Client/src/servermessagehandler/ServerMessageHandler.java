@@ -12,9 +12,10 @@ import java.net.Socket;
  * @author Daniel Lovegrove
  */
 public class ServerMessageHandler {
-    client.Client myClient;
-    BufferedReader input;
-    OutputStream output;
+    private static final char TERMINATOR = 0xFFFD; // UTF-8 encoding of 0xFF
+    private final client.Client myClient;
+    private BufferedReader input;
+    private OutputStream output;
     
 
     /**
@@ -45,11 +46,18 @@ public class ServerMessageHandler {
      */
     public String readFromServer(int msgLength) throws IOException {
         StringBuilder message = new StringBuilder(msgLength);
+        boolean terminatorFound = false;
         
-        while (message.length() < msgLength) {
+        while (false == terminatorFound) {
             if (input != null && input.ready()) {
+                // Get a byte from the server
                 char serverByte = (char) input.read();
-                message.append(serverByte);
+                // Check whether the terminator byte has come in yet
+                if (serverByte == TERMINATOR) {
+                    terminatorFound = true;
+                } else {
+                    message.append(serverByte);
+                }
             }
         }
         
@@ -62,9 +70,13 @@ public class ServerMessageHandler {
      * @param message The byte to write to the server.
      * @throws IOException 
      */
-    public void sendMessage(byte message) throws IOException {
+    public void sendMessage(String message) throws IOException {
         if (output != null) {
-            output.write(message);
+            for (int i = 0; i < message.length(); i++) {
+                output.write(message.charAt(i));
+            }
+            // Finally, terminate it.
+            output.write(TERMINATOR);
             output.flush();
         }
     }

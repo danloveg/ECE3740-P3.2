@@ -88,7 +88,7 @@ public class Client implements Runnable {
      * @param message The message to send.
      * @throws IOException
      */
-    public void sendMessageToServer(byte message) throws IOException {
+    public void sendMessageToServer(String message) throws IOException {
         commandHandler.sendMessage(message);
     }
 

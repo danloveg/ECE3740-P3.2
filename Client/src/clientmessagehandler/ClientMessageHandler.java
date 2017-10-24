@@ -53,7 +53,7 @@ public class ClientMessageHandler {
             case "disconnect":
                 if (true == myClient.isConnected()) {
                     try {
-                        myClient.sendMessageToServer((byte) 'd');
+                        myClient.sendMessageToServer("d");
                         myClient.disconnectFromServer();
                     } catch (IOException e) {
                         console.update("Error: " + e.toString());
@@ -66,7 +66,7 @@ public class ClientMessageHandler {
                 console.update("Quitting...");
                 if (true == myClient.isConnected()) {
                     try {
-                        myClient.sendMessageToServer((byte) 'q');
+                        myClient.sendMessageToServer("q");
                         myClient.disconnectFromServer();
                     } catch (IOException e) {
                         console.update("Error: " + e.toString());
@@ -77,7 +77,7 @@ public class ClientMessageHandler {
             case "time":
                 if (true == myClient.isConnected()) {
                     try {
-                        myClient.sendMessageToServer((byte) 't');
+                        myClient.sendMessageToServer("t");
                     } catch (IOException e) {
                         console.update("Could not send message to server.");
                     }
