@@ -50,10 +50,11 @@ public class ClientMessageHandler {
                     UI.update("Already connected!");
                 }
                 break;
-            case "disconnect":
+            case "d":
+            case "q":
                 if (true == myClient.isConnected()) {
                     try {
-                        myClient.sendMessageToServer("d");
+                        myClient.sendMessageToServer(cmd);
                         myClient.disconnectFromServer();
                     } catch (IOException e) {
                         UI.update("Error: " + e.toString());
@@ -61,30 +62,12 @@ public class ClientMessageHandler {
                 } else {
                     UI.update("No connected server.");
                 }
-                break;
-            case "quit":
-                UI.update("Quitting...");
-                if (true == myClient.isConnected()) {
-                    try {
-                        myClient.sendMessageToServer("q");
-                        myClient.disconnectFromServer();
-                    } catch (IOException e) {
-                        UI.update("Error: " + e.toString());
-                    }
-                }
-                System.exit(0);
-                break;
-            case "time":
-                if (true == myClient.isConnected()) {
-                    try {
-                        myClient.sendMessageToServer("t");
-                    } catch (IOException e) {
-                        UI.update("Could not send message to server.");
-                    }
-                } else {
-                    UI.update("No connected server.");
+                // If we want to quit, close the program as well
+                if (cmd.equals("q")) {
+                    System.exit(0);
                 }
                 break;
+            case "t":
             case "L1on":
             case "L2on":
             case "L3on":
@@ -107,6 +90,7 @@ public class ClientMessageHandler {
                 }
                 break;
             case "":
+                // Do nothing
                 break;
             default:
                 UI.update("\"" + cmd + "\" is not recognized.");

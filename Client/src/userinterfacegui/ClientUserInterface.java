@@ -277,15 +277,15 @@ public class ClientUserInterface extends javax.swing.JFrame
     }//GEN-LAST:event_connectToServerButtonActionPerformed
 
     private void disconnectFromServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectFromServerButtonActionPerformed
-        commandHandler.execute("disconnect");
+        commandHandler.execute("d");
     }//GEN-LAST:event_disconnectFromServerButtonActionPerformed
 
     private void getTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getTimeButtonActionPerformed
-        commandHandler.execute("time");
+        commandHandler.execute("t");
     }//GEN-LAST:event_getTimeButtonActionPerformed
 
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
-        commandHandler.execute("quit");
+        commandHandler.execute("q");
     }//GEN-LAST:event_quitButtonActionPerformed
 
     private void btn1StateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1StateButtonActionPerformed
