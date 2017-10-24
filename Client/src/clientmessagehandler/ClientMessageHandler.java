@@ -1,4 +1,4 @@
-package clientcommandhandler;
+package clientmessagehandler;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -9,7 +9,7 @@ import java.io.IOException;
  * 
  * @author Daniel Lovegrove
  */
-public class ClientCommandHandler {
+public class ClientMessageHandler {
     
     private final userinterface.StandardIO console;
     private client.Client myClient;
@@ -20,7 +20,7 @@ public class ClientCommandHandler {
      * @param console The console user interface
      * @param client The client
      */
-    public ClientCommandHandler(userinterface.StandardIO console, client.Client client) {
+    public ClientMessageHandler(userinterface.StandardIO console, client.Client client) {
         this.console = console;
         this.myClient = client;
     }

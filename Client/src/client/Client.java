@@ -2,7 +2,7 @@ package client;
 
 import java.io.IOException;
 import java.net.*;
-import servercommandhandler.ServerCommandHandler;
+import servermessagehandler.ServerMessageHandler;
 
 /**
  * Client to connect to server via TCP/IP socket.
@@ -16,7 +16,7 @@ public class Client implements Runnable {
     private int portNumber;
     private Socket clientSocket = null;
     private final userinterface.StandardIO console;
-    private servercommandhandler.ServerCommandHandler commandHandler;
+    private servermessagehandler.ServerMessageHandler commandHandler;
     private boolean connected = false;
 
     /**
@@ -40,7 +40,7 @@ public class Client implements Runnable {
             // Create a socket
             clientSocket = new Socket(address, portNumber);
             // Create a new command handler
-            this.commandHandler = new ServerCommandHandler(this,
+            this.commandHandler = new ServerMessageHandler(this,
                                                            clientSocket,
                                                            console);
             // Mark Client as "connected"

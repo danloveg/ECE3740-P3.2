@@ -1,4 +1,4 @@
-package servercommandhandler;
+package servermessagehandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,7 +11,7 @@ import java.net.Socket;
  * Handle sending and receiving messages to the server.
  * @author Daniel Lovegrove
  */
-public class ServerCommandHandler {
+public class ServerMessageHandler {
     client.Client myClient;
     BufferedReader input;
     OutputStream output;
@@ -25,7 +25,7 @@ public class ServerCommandHandler {
      * @param ui The user interface
      * @throws IOException 
      */
-    public ServerCommandHandler(client.Client client,
+    public ServerMessageHandler(client.Client client,
                                Socket clientSocket,
                                userinterface.StandardIO ui) throws IOException {
         this.myClient = client;

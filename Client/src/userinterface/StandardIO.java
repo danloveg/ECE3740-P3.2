@@ -14,7 +14,7 @@ import java.io.IOException;
 public class StandardIO implements Runnable, Userinterface {
     
     private final BufferedReader console;
-    private clientcommandhandler.ClientCommandHandler commandHandler;
+    private clientmessagehandler.ClientMessageHandler commandHandler;
     
     
     /**
@@ -34,7 +34,7 @@ public class StandardIO implements Runnable, Userinterface {
      * Creates an instance with an associated command handler.
      * @param handler The handler to be associated with this instance.
      */
-    public StandardIO(clientcommandhandler.ClientCommandHandler handler) {
+    public StandardIO(clientmessagehandler.ClientMessageHandler handler) {
         this.commandHandler = handler;
         this.console = new BufferedReader(new InputStreamReader(System.in));
         
@@ -49,7 +49,7 @@ public class StandardIO implements Runnable, Userinterface {
      * Set the command handler for this instance.
      * @param handler 
      */
-    public void setCommandHandler(clientcommandhandler.ClientCommandHandler handler) {
+    public void setCommandHandler(clientmessagehandler.ClientMessageHandler handler) {
         this.commandHandler = handler;
     }
     
