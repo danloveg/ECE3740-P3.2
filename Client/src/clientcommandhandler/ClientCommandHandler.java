@@ -2,6 +2,7 @@ package clientcommandhandler;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.io.IOException;
 
 /**
  * Handles the executing of the user's commands.
@@ -41,7 +42,11 @@ public class ClientCommandHandler {
                         Thread clientThread = new Thread(myClient);
                         clientThread.start();
                         console.update("Connected to server.");
-                    } catch (UnknownHostException e) {}
+                    } catch (UnknownHostException e) {
+                        console.update("Could not determine host.");
+                    } catch (IOException e) {
+                        console.update("Could not connect to server.");
+                    }
                 } else {
                     console.update("Already connected!");
                 }

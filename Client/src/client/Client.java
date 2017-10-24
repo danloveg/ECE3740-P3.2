@@ -33,22 +33,18 @@ public class Client implements Runnable {
     /**
      * Connect to a server on the specified port number using the local host.
      * @param address The host's address
+     * @throws IOException
      */
-    public void connectToServer(InetAddress address) {
+    public void connectToServer(InetAddress address) throws IOException {
         if (null == this.clientSocket) {
-            try {
-                // Create a socket
-                clientSocket = new Socket(address, portNumber);
-                // Create a new command handler
-                this.commandHandler = new ServerCommandHandler(this,
-                                                               clientSocket,
-                                                               console);
-                // Mark Client as "connected"
-                connected = true;
-            } catch (IOException e) {
-                console.update(e.toString());
-                System.exit(1);
-            }
+            // Create a socket
+            clientSocket = new Socket(address, portNumber);
+            // Create a new command handler
+            this.commandHandler = new ServerCommandHandler(this,
+                                                           clientSocket,
+                                                           console);
+            // Mark Client as "connected"
+            connected = true;
         }
     }
 
