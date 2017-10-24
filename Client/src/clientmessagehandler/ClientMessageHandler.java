@@ -36,36 +36,11 @@ public class ClientMessageHandler {
 
         switch (cmd) {
             case "connect":
-                if (false == myClient.isConnected()) {
-                    try {
-                        myClient.connectToServer(InetAddress.getLocalHost());
-                        Thread clientThread = new Thread(myClient);
-                        clientThread.start();
-                    } catch (UnknownHostException e) {
-                        UI.update("Could not determine host.");
-                    } catch (IOException e) {
-                        UI.update("Could not connect to server.");
-                    }
-                } else {
-                    UI.update("Already connected!");
-                }
+                connectClientToServer();
                 break;
             case "d":
             case "q":
-                if (true == myClient.isConnected()) {
-                    try {
-                        myClient.sendMessageToServer(cmd);
-                        myClient.disconnectFromServer();
-                    } catch (IOException e) {
-                        UI.update("Error: " + e.toString());
-                    }
-                } else {
-                    UI.update("No connected server.");
-                }
-                // If we want to quit, close the program as well
-                if (cmd.equals("q")) {
-                    System.exit(0);
-                }
+                disconnectClientFromServer(cmd);
                 break;
             case "t":
             case "L1on":
@@ -79,22 +54,91 @@ public class ClientMessageHandler {
             case "gpb1":
             case "gpb2":
             case "gpb3":
-                if (true == myClient.isConnected()) {
-                    try {
-                        myClient.sendMessageToServer(cmd);
-                    } catch (IOException e) {
-                        UI.update("Could not send message to server.");
-                    }
-                } else {
-                    UI.update("No connected server.");
-                }
+                sendStringToServer(cmd);
                 break;
             case "":
-                // Do nothing
                 break;
             default:
-                UI.update("\"" + cmd + "\" is not recognized.");
+                invalidCommand(cmd);
                 break;
         }
+    }
+
+
+    /**
+     * Try to connect the client to the server if they aren't already connected.
+     */
+    private void connectClientToServer() {
+        if (false == myClient.isConnected()) {
+            // If we are not connected, try to connect
+            try {
+                // Connect
+                myClient.connectToServer(InetAddress.getLocalHost());
+                // Create Client Thread and start it
+                Thread clientThread = new Thread(myClient);
+                clientThread.start();
+            } catch (UnknownHostException e) {
+                UI.update("Could not determine host.");
+            } catch (IOException e) {
+                UI.update("Could not connect to server.");
+            }
+        } else {
+            // We are already connected
+            UI.update("Already connected!");
+        }
+    }
+
+
+    /**
+     * Try to disconnect the client from the server if they are connected to a
+     * server.
+     * @param disconnectString The disconnect code that will be sent to the
+     * server
+     */
+    private void disconnectClientFromServer(String disconnectString) {
+        if (true == myClient.isConnected()) {
+            // If we are connected, try to quit
+            try {
+                // Send disconnect message q or d to server
+                sendStringToServer(disconnectString);
+                // Then disconnect
+                myClient.disconnectFromServer();
+            } catch (IOException e) {
+                UI.update("Disconnection error: " + e.toString());
+            }
+        } else {
+            // We are not connected to a server\
+            UI.update("No connected server.");
+        }
+        // If we want to quit, close the program as well
+        if (disconnectString.equals("q")) {
+            System.exit(0);
+        }
+    }
+
+
+    /**
+     * Use the client to send a String to a connected server.
+     * @param message The message to send
+     */
+    private void sendStringToServer(String message) {
+        if (true == myClient.isConnected()) {
+            try {
+                myClient.sendMessageToServer(message);
+            } catch (IOException e) {
+                UI.update("Could not send message to server.");
+            }
+        } else {
+            UI.update("No connected server.");
+        }
+    }
+
+
+    /**
+     * Notify the user that their command is not valid.
+     * @param command The command that was invalid
+     */
+    private void invalidCommand(String command) {
+        UI.update("\"" + command + "\" is not recognized.");
     }
 }
