@@ -8,7 +8,8 @@ public class ClientTest {
     
     public static void main (String[] args) {
         // Instantiate a user interface
-        userinterface.StandardIO userInterface = new userinterface.StandardIO();
+        final userinterfacegui.ClientUserInterface userInterface = 
+                new userinterfacegui.ClientUserInterface();
         
         // Instantiate a new Client
         client.Client myClient = new client.Client(5555, userInterface);
@@ -18,10 +19,15 @@ public class ClientTest {
                 new clientmessagehandler.ClientMessageHandler(userInterface, myClient);
         
         // Set the user interface's command handler
-        userInterface.setCommandHandler(commandHandler);
+        //userInterface.setCommandHandler(commandHandler);
         
         // Start the user interface thread
-        new Thread(userInterface).start();
+        //new Thread(userInterface).start();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                userInterface.setVisible(true);
+            }
+        });
         
         // Build the title to display to the client
         StringBuilder title = new StringBuilder(150);
