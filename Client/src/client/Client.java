@@ -46,7 +46,7 @@ public class Client implements Runnable {
                 // Mark Client as "connected"
                 connected = true;
             } catch (IOException e) {
-                console.log(e.toString());
+                console.update(e.toString());
                 System.exit(1);
             }
         }
@@ -98,8 +98,8 @@ public class Client implements Runnable {
         try {
             commandHandler.sendMessage(message);
         } catch (IOException e) {
-            console.log("Could not send message to server: " + e.toString());
-            console.log("Disconnecting...");
+            console.update("Could not send message to server: " + e.toString());
+            console.update("Disconnecting...");
             this.disconnectFromServer();
         }
     }
@@ -113,11 +113,11 @@ public class Client implements Runnable {
         while (true == connected) {
             try {
                 String msg = this.commandHandler.readFromServer(MSG_LENGTH);
-                console.log("Response: " + msg);
+                console.update("Response: " + msg);
             } catch (IOException e) {
                 if (true == connected) {
-                    console.log("Could not read from server: " + e.toString());
-                    console.log("Disconnecting...");
+                    console.update("Could not read from server: " + e.toString());
+                    console.update("Disconnecting...");
                     this.disconnectFromServer();
                 }
             }

@@ -11,7 +11,7 @@ import java.io.IOException;
  * 
  * @author Daniel Lovegrove
  */
-public class StandardIO implements Runnable {
+public class StandardIO implements Runnable, Userinterface {
     
     private final BufferedReader console;
     private clientcommandhandler.ClientCommandHandler commandHandler;
@@ -59,7 +59,8 @@ public class StandardIO implements Runnable {
      * the message.
      * @param message The message to be displayed on the console. 
      */
-    public void log(String message) {
+    @Override
+    public void update(String message) {
         System.out.println(message);
     }
     

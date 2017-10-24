@@ -33,7 +33,7 @@ public class ClientTest {
         title.append("* quit:\t\tQuit the application\n");
         
         // Display the initial menu
-        userInterface.log(title.toString());
+        userInterface.update(title.toString());
         
     }
 }

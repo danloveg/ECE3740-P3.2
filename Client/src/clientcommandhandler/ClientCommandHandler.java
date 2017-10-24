@@ -40,23 +40,23 @@ public class ClientCommandHandler {
                         myClient.connectToServer(InetAddress.getLocalHost());
                         Thread clientThread = new Thread(myClient);
                         clientThread.start();
-                        console.log("Connected to server.");
+                        console.update("Connected to server.");
                     } catch (UnknownHostException e) {}
                 } else {
-                    console.log("Already connected!");
+                    console.update("Already connected!");
                 }
                 break;
             case "disconnect":
                 if (true == myClient.isConnected()) {
                     myClient.sendMessageToServer((byte) 'd');
                     myClient.disconnectFromServer();
-                    console.log("Disconnected from server.");
+                    console.update("Disconnected from server.");
                 } else {
-                    console.log("No connected server.");
+                    console.update("No connected server.");
                 }
                 break;
             case "quit":
-                console.log("Quitting...");
+                console.update("Quitting...");
                 if (true == myClient.isConnected()) {
                     myClient.sendMessageToServer((byte) 'q');
                     myClient.disconnectFromServer();
@@ -67,13 +67,13 @@ public class ClientCommandHandler {
                 if (true == myClient.isConnected()) {
                     myClient.sendMessageToServer((byte) 't');
                 } else {
-                    console.log("No connected server.");
+                    console.update("No connected server.");
                 }
                 break;
             case "":
                 break;
             default:
-                console.log("\"" + cmd + "\" is not recognized.");
+                console.update("\"" + cmd + "\" is not recognized.");
                 break;
         }
     }
